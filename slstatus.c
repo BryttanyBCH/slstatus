@@ -23,6 +23,31 @@ static Display *dpy;
 
 #include "config.h"
 
+/*
+ * Plan:
+ * - Create a struct to hold functions, delay, and stored value
+ *   - Place in config.h
+ *   - Maybe expand pre-existing struct
+ */
+const char*
+get_delayed_update(int i)
+{
+  static int update_counter;
+  static char temp_bat_remain[50];
+  
+  if (args[i].func == battery_remaining) {
+    update_counter++;
+    if (update_counter >= 10) {
+      update_counter = 0;
+      strcpy(temp_bat_remain, args[i].func(args[i].args));
+      return temp_bat_remain;
+    } else {
+      return temp_bat_remain;
+    }
+  }
+  return args[i].func(args[i].args);
+}
+
 static void
 terminate(const int signo)
 {
@@ -84,7 +109,7 @@ main(int argc, char *argv[])
 
 		status[0] = '\0';
 		for (i = len = 0; i < LEN(args); i++) {
-			if (!(res = args[i].func(args[i].args))) {
+			if (!(res = get_delayed_update(i))) {
 				res = unknown_str;
 			}
 			if ((ret = esnprintf(status + len, sizeof(status) - len,

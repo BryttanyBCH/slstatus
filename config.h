@@ -67,12 +67,7 @@ static const struct arg args[] = {
   { disk_free,          " %s | ",       "/"  },
   { disk_free,          "%s | ",        "/home/"  },
   { battery_perc,       "%s%% ",        "BAT0"  },
-  { battery_remaining,  "%s | ",        "BAT0"  },
-	{ datetime,           "%s",           "%F %I:%M %p"  },
+  { battery_remaining,  "%s",           "BAT0"  },
+  { datetime,           " | %s ",       "%F %I:%M %p"  },
 
 };
-
-
-
-
-
