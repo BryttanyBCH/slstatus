@@ -40,10 +40,8 @@ get_delayed_update(int i)
     if (update_counter >= 10) {
       update_counter = 0;
       strcpy(temp_bat_remain, args[i].func(args[i].args));
-      return temp_bat_remain;
-    } else {
-      return temp_bat_remain;
     }
+      return temp_bat_remain;
   }
   return args[i].func(args[i].args);
 }
